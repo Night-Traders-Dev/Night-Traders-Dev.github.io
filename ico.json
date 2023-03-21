@@ -1,16 +1,4 @@
-// app.js
-
-window.addEventListener("load", async () => {
-  if (window.ethereum) {
-    try {
-      // Request account access
-      await window.ethereum.request({ method: "eth_requestAccounts" });
-
-      // Initialize web3
-      const web3 = new Web3(window.ethereum);
-
-      // Get ICO ABI
-      const icoAbi = [
+[
   {
     "inputs": [
       {
@@ -212,31 +200,4 @@ window.addEventListener("load", async () => {
     "stateMutability": "payable",
     "type": "receive"
   }
-];
-
-      // Set ICO contract address
-      const icoAddress = "0x0ebEAa24aE030433627E84919da3450763904Fe4";
-
-      // Create ICO contract instance
-      const icoContract = new web3.eth.Contract(icoAbi, icoAddress);
-
-      // Handle buy tokens button click
-      document.getElementById("buyTokensButton").addEventListener("click", async () => {
-        try {
-          const maticAmount = document.getElementById("maticAmountInput").value;
-          const accounts = await web3.eth.getAccounts();
-          await icoContract.methods.buyTokens().send({
-            from: accounts[0],
-            value: web3.utils.toWei(maticAmount, "ether")
-          });
-        } catch (error) {
-          console.error("Error buying tokens:", error);
-        }
-      });
-    } catch (error) {
-      console.error("Error connecting to MetaMask:", error);
-    }
-  } else {
-    console.error("Non-Ethereum browser detected. Please install MetaMask.");
-  }
-});
+]
