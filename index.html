@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PolyPen ICO</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <h1>PolyPen Token ICO</h1>
+    <p>Buy PolyPen Tokens with Polygon (MATIC)</p>
+    <div>
+      <input id="maticAmount" type="number" placeholder="Enter MATIC amount" min="0">
+      <button id="buyTokensButton" onclick="buyTokens()">Buy Tokens</button>
+    </div>
+    <div id="status"></div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1/web3.min.js"></script>
+  <script src="ICO.abi.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
