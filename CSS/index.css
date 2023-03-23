@@ -112,3 +112,34 @@ a {
 .dropbtn {
     color: #fff;
 }
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  nav ul {
+    display: none;
+  }
+
+  nav .hamburger {
+    display: block;
+  }
+
+  nav ul.show {
+    display: block;
+  }
+
+  .dropdown:hover .dropdown-content,
+  .dropdown .dropdown-content {
+    display: none;
+    position: static;
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  .dropdown-content a {
+    padding: 0;
+  }
+}
