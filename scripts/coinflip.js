@@ -30,8 +30,8 @@ async function loadABI(jsonPath) {
 (async () => {
   if (await connect()) {
     // Load ABIs from JSON files
-    const polyPenTokenABI = await loadABI('polyPenTokenABI.json');
-    const coinflipContractABI = await loadABI('coinflipContractABI.json');
+    const polyPenTokenABI = await loadABI('scripts/polyPenTokenABI.json');
+    const coinflipContractABI = await loadABI('scripts/coinflipContractABI.json');
 
     // Replace with the correct contract addresses
     const polyPenTokenAddress = '0x7def6e73B2Be4D31fe1c918c3b55907cFc21bA8D';
