@@ -28,39 +28,39 @@ async function loadABI(jsonPath) {
 }
 
 (async () => {
-  if (await connect()) {
-    // Load ABIs from JSON files
-    const polyPenTokenABI = await loadABI('scripts/polyPenTokenABI.json');
-    const coinflipContractABI = await loadABI('scripts/coinflipContractABI.json');
+  // Load ABIs from JSON files
+  const polyPenTokenABI = await loadABI('polyPenTokenABI.json');
+  const coinflipContractABI = await loadABI('coinflipContractABI.json');
 
-    // Replace with the correct contract addresses
-    const polyPenTokenAddress = '0x7def6e73B2Be4D31fe1c918c3b55907cFc21bA8D';
-    const coinflipContractAddress = '0x909dE4D8856d041335EaE89d421D331026C95e7d';
+  // Replace with the correct contract addresses
+  const polyPenTokenAddress = '0x7def6e73B2Be4D31fe1c918c3b55907cFc21bA8D';
+  const coinflipContractAddress = '0x909dE4D8856d041335EaE89d421D331026C95e7d';
 
-    // Initialize contract instances
-    const polyPenToken = new web3.eth.Contract(polyPenTokenABI, polyPenTokenAddress);
-    const coinflipContract = new web3.eth.Contract(coinflipContractABI, coinflipContractAddress);
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
 
-    // Example game logic
-    const playCoinflip = async () => {
-      try {
-        const accounts = await web3.eth.getAccounts();
-        const playerAddress = accounts[0];
-        const betAmount = web3.utils.toWei('1', 'ether');
+  // Initialize contract instances
+  const polyPenToken = new ethers.Contract(polyPenTokenAddress, polyPenTokenABI, signer);
+  const coinflipContract = new ethers.Contract(coinflipContractAddress, coinflipContractABI, signer);
 
-        // Approve the coinflip contract to spend tokens on the player's behalf
-        await polyPenToken.methods.approve(coinflipContractAddress, betAmount).send({ from: playerAddress });
+  // Example game logic
+  const playCoinflip = async () => {
+    try {
+      const playerAddress = await signer.getAddress();
+      const betAmount = ethers.utils.parseEther('1');
 
-        // Place bet and play coinflip
-        const result = await coinflipContract.methods.placeBet(true).send({ from: playerAddress });
-        console.log('Coinflip result:', result);
-      } catch (error) {
-        console.error('Error playing coinflip:', error);
-      }
-    };
+      // Approve the coinflip contract to spend tokens on the player's behalf
+      await polyPenToken.approve(coinflipContractAddress, betAmount);
 
-    // Connect play button to playCoinflip function
-    const playButton = document.getElementById('play-coinflip');
-    playButton.addEventListener('click', playCoinflip);
-  }
+      // Place bet and play coinflip
+      const result = await coinflipContract.placeBet(true);
+      console.log('Coinflip result:', result);
+    } catch (error) {
+      console.error('Error playing coinflip:', error);
+    }
+  };
+
+  // Connect play button to playCoinflip function
+  const playButton = document.getElementById('play-coinflip');
+  playButton.addEventListener('click', playCoinflip);
 })();
