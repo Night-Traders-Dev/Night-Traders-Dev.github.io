@@ -3,36 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PolyPen Token ICO</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl7/1L_dstPt3HV5HzF6Gvk/e9UNw6QFf/400jEvw/" crossorigin="anonymous">
+    <title>Poly Penthouse Project</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <div class="top-bar">
-        <a href="https://opensea.io/collection/poly-penthouses" target="_blank">Poly Penthouses</a>
-        <a href="https://discord.gg/9kwQAeYkWY" target="_blank">Discord</a>
-        <a href="https://link.medium.com/bz81ap2Ynyb" target="_blank">Medium Article</a>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-12 text-center my-5">
-                <h1>PolyPen Token ICO</h1>
+    <header>
+        <nav>
+            <div class="logo">Poly Penthouse Project</div>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="ICO.html">ICO</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Welcome to the Poly Penthouse Project</h1>
+                <p>Unlock the future of decentralized real estate investments</p>
+                <a href="ICO.html" class="cta-btn">Join the ICO</a>
             </div>
-        </div>
-        <div class="conversion-text text-center mb-3">
-            <p>1 Matic = 100k PolyPen Token</p>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-6">
-                <div class="mb-3">
-                    <label for="maticAmountInput" class="form-label">Amount of Matic to spend:</label>
-                    <input type="number" class="form-control" id="maticAmountInput" placeholder="Enter amount of Matic">
-                </div>
-                <button class="btn btn-primary" id="buyTokensButton">Buy PolyPen Tokens</button>
-            </div>
-        </div>
-    </div>
-    <script src="app.js"></script>
+        </section>
+    </main>
+    <script src="index.js"></script>
 </body>
 </html>
