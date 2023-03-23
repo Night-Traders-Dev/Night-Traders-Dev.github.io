@@ -1,66 +1,547 @@
-// coinflip.js
-
-// Connect to Metamask
+// Connect to MetaMask
 async function connect() {
-  if (window.ethereum) {
-    try {
-      await window.ethereum.request({ method: "eth_requestAccounts" });
-      return true;
-    } catch (err) {
-      console.error("User denied account access");
-      return false;
+    if (window.ethereum) {
+        try {
+            const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+            showGameControls();
+            return accounts[0];
+        } catch (err) {
+            console.error("User denied account access");
+            return null;
+        }
+    } else {
+        alert("Please install MetaMask!");
+        return null;
     }
-  } else {
-    alert("Please install MetaMask!");
-    return false;
-  }
 }
 
-// Function to load ABI from a JSON file
-async function loadABI(jsonPath) {
-  try {
-    const response = await fetch(jsonPath);
-    const abi = await response.json();
-    return abi;
-  } catch (error) {
-    console.error(`Error loading ABI from ${jsonPath}:`, error);
-  }
+// Show game controls
+function showGameControls() {
+    const gameControls = document.getElementById("game-controls");
+    gameControls.hidden = false;
 }
 
-window.addEventListener("DOMContentLoaded", async () => {
-  // Load ABIs from JSON files
-  const polyPenTokenABI = await loadABI('polyPenTokenABI.json');
-  const coinflipContractABI = await loadABI('coinflipContractABI.json');
+(async () => {
+    const provider = new Web3.providers.WebsocketProvider(window.ethereum);
+    const web3 = new Web3(provider);
 
-  // Replace with the correct contract addresses
-  const polyPenTokenAddress = '0x7def6e73B2Be4D31fe1c918c3b55907cFc21bA8D';
-  const coinflipContractAddress = '0x909dE4D8856d041335EaE89d421D331026C95e7d';
+    // Load ABI from a JSON string (replace with your own ABI)
+    const polyPenTokenABI = [
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "Approval",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "Transfer",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      }
+    ],
+    "name": "allowance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "approve",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOf",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "decimals",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "subtractedValue",
+        "type": "uint256"
+      }
+    ],
+    "name": "decreaseAllowance",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "addedValue",
+        "type": "uint256"
+      }
+    ],
+    "name": "increaseAllowance",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "name",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "symbol",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalSupply",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "transfer",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "transferFrom",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+];
+    const coinflipContractABI = [
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "_polyPenToken",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "player",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "win",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "GameResult",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "coinflip",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "polyPenToken",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "newFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "setFee",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "newMultiplier",
+        "type": "uint256"
+      }
+    ],
+    "name": "setPayoutMultiplier",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdrawMatic",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+];
 
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const signer = provider.getSigner();
+    // Replace with the correct contract addresses
+    const polyPenTokenAddress = '0x7def6e73B2Be4D31fe1c918c3b55907cFc21bA8D';
+    const coinflipContractAddress = '0x909dE4D8856d041335EaE89d421D331026C95e7d';
 
-  // Initialize contract instances
-  const polyPenToken = new ethers.Contract(polyPenTokenAddress, polyPenTokenABI, signer);
-  const coinflipContract = new ethers.Contract(coinflipContractAddress, coinflipContractABI, signer);
+    // Initialize contract instances
+    const polyPenToken = new web3.eth.Contract(polyPenTokenABI, polyPenTokenAddress);
+    const coinflipContract = new web3.eth.Contract(coinflipContractABI, coinflipContractAddress);
 
-  // Example game logic
-  const playCoinflip = async () => {
-    try {
-      const playerAddress = await signer.getAddress();
-      const betAmount = ethers.utils.parseEther('1');
+    // Example game logic
+    const playCoinflip = async () => {
+        try {
+            const playerAddress = await connect();
+            if (!playerAddress) return;
 
-      // Approve the coinflip contract to spend tokens on the player's behalf
-      await polyPenToken.approve(coinflipContractAddress, betAmount);
+            const betAmount = web3.utils.toWei('1', 'ether');
 
-      // Place bet and play coinflip
-      const result = await coinflipContract.placeBet(true);
-      console.log('Coinflip result:', result);
-    } catch (error) {
-      console.error('Error playing coinflip:', error);
-    }
-  };
+            // Approve the coinflip contract to spend tokens on the player's behalf
+            await polyPenToken.methods.approve(coinflipContractAddress, betAmount).send({ from: playerAddress });
 
-  // Connect play button to playCoinflip function
-  const playButton = document.getElementById('play-coinflip');
-  playButton.addEventListener('click', playCoinflip);
-});
+            // Place bet and play coinflip
+            const result = await coinflipContract.methods.placeBet(true).send({ from: playerAddress });
+            console.log('Coinflip result:', result);
+        } catch (error) {
+            console.error('Error playing coinflip:', error);
+        }
+    };
+
+    // Connect buttons to functions
+    const connectButton = document.getElementById('connect-wallet');
+    connectButton.addEventListener('click', connect);
+
+    const playButton = document.getElementById('play-coinflip');
+    playButton.addEventListener('click', playCoinflip);
+})();

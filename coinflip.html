@@ -3,40 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coinflip Game</title>
+    <title>Coin Flip</title>
     <link rel="stylesheet" href="CSS/coinflip.css">
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
 </head>
 <body>
-    <nav>
-        <a href="index.html" class="logo">Poly Penthouse Project</a>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="ICO.html">ICO</a></li>
-            <li><a href="coinflip.html">Coinflip Game</a></li>
-        </ul>
-    </nav>
-    <div class="container">
-        <div class="row">
-            <div class="col-12 text-center my-5">
-                <h1>PolyPen Coinflip Game</h1>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-6">
-                <div class="mb-3">
-                    <label for="betAmountInput" class="form-label">Bet Amount (PolyPen Token):</label>
-                    <input type="number" class="form-control" id="betAmountInput" placeholder="Enter bet amount">
-                </div>
-                <button class="btn btn-primary" id="play-coinflip">Play Coinflip (0.1 Matic fee)</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 text-center my-3" id="gameResult">
-                <!-- Game result will be displayed here -->
-            </div>
-        </div>
+    <h1>Coin Flip Game</h1>
+    <button id="connect-wallet">Connect Wallet</button>
+    <div id="game-controls" hidden>
+        <button id="approve-tokens">Approve Tokens</button>
+        <button id="play-coinflip">Play Coin Flip</button>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.3/dist/web3.min.js"></script>
     <script src="scripts/coinflip.js"></script>
 </body>
 </html>
