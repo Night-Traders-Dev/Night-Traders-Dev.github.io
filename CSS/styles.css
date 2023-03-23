@@ -197,3 +197,17 @@ button:hover {
     max-height: 200px; /* Add this line */
   }
 }
+nav {
+  background-color: #6c757d;
+  padding: 10px 0;
+}
+
+@media screen and (max-width: 768px) {
+  nav .logo {
+    color: #fff;
+  }
+
+  nav .hamburger {
+    color: #fff;
+  }
+}
