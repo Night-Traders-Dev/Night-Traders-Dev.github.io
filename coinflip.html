@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coinflip Game</title>
+    <link rel="stylesheet" href="CSS/coinflip.css">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl7/1L_dstPt3HV5HzF6Gvk/e9UNw6QFf/400jEvw/" crossorigin="anonymous">
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">Poly Penthouse Project</a>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="ICO.html">ICO</a></li>
+            <li><a href="coinflip.html">Coinflip Game</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center my-5">
+                <h1>PolyPen Coinflip Game</h1>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6">
+                <div class="mb-3">
+                    <label for="betAmountInput" class="form-label">Bet Amount (PolyPen Token):</label>
+                    <input type="number" class="form-control" id="betAmountInput" placeholder="Enter bet amount">
+                </div>
+                <button class="btn btn-primary" id="playCoinflipButton">Play Coinflip (0.1 Matic fee)</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center my-3" id="gameResult">
+                <!-- Game result will be displayed here -->
+            </div>
+        </div>
+    </div>
+    <script src="scripts/coinflip.js"></script>
+</body>
+</html>
