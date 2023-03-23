@@ -1,8 +1,20 @@
 // coinflip.js
 
-// Load Web3
-const Web3 = require('web3');
-const web3 = new Web3('https://polygon-rpc.com/');
+// Connect to Metamask
+async function connect() {
+  if (window.ethereum) {
+    try {
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+      return true;
+    } catch (err) {
+      console.error("User denied account access");
+      return false;
+    }
+  } else {
+    alert("Please install MetaMask!");
+    return false;
+  }
+}
 
 // Function to load ABI from a JSON file
 async function loadABI(jsonPath) {
