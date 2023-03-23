@@ -30,7 +30,6 @@ async function playCoinflip() {
   const web3 = new Web3(window.ethereum);
   const accounts = await web3.eth.getAccounts();
   const coinflipContract = new web3.eth.Contract([
-    [
   {
     "inputs": [
       {
@@ -184,11 +183,9 @@ async function playCoinflip() {
     "stateMutability": "nonpayable",
     "type": "function"
   }
-]
   ], contractAddress);
 
   const polyPenToken = new web3.eth.Contract([
-    [
   {
     "inputs": [],
     "stateMutability": "nonpayable",
@@ -516,7 +513,6 @@ async function playCoinflip() {
     "stateMutability": "nonpayable",
     "type": "function"
   }
-]
   ], polyPenTokenAddress);
 
   const betAmountWei = web3.utils.toWei(betAmount, 'ether');
