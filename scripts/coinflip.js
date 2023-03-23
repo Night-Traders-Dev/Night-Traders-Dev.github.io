@@ -27,7 +27,7 @@ async function loadABI(jsonPath) {
   }
 }
 
-(async () => {
+window.addEventListener("DOMContentLoaded", async () => {
   // Load ABIs from JSON files
   const polyPenTokenABI = await loadABI('polyPenTokenABI.json');
   const coinflipContractABI = await loadABI('coinflipContractABI.json');
@@ -63,4 +63,4 @@ async function loadABI(jsonPath) {
   // Connect play button to playCoinflip function
   const playButton = document.getElementById('play-coinflip');
   playButton.addEventListener('click', playCoinflip);
-})();
+});
