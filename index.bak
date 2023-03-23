@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poly Penthouse Project</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Poly Penthouse Project</div>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="ICO.html">ICO</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Welcome to the Poly Penthouse Project</h1>
+                <p>Unlock the future of decentralized real estate investments</p>
+                <a href="ICO.html" class="cta-btn">Join the ICO</a>
+            </div>
+        </section>
+    </main>
+    <script src="index.js"></script>
+</body>
+</html>
