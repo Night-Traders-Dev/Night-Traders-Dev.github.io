@@ -543,8 +543,9 @@ async function playCoinflip() {
     }
   } catch (err) {
     console.error("Error playing coinflip", err);
-    alert("Error playing coinflip. Please try again.");
-  }
+    alert("Error playing coinflip: " + err.message);
+ }
+
 }
 
 document.getElementById("playCoinflipButton").addEventListener("click", playCoinflip);
