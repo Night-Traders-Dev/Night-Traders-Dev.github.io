@@ -1,32 +1,5 @@
-// Connect to MetaMask
-async function connect() {
-    if (window.ethereum) {
-        try {
-            const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-            showGameControls();
-            return accounts[0];
-        } catch (err) {
-            console.error("User denied account access");
-            return null;
-        }
-    } else {
-        alert("Please install MetaMask!");
-        return null;
-    }
-}
-
-// Show game controls
-function showGameControls() {
-    const gameControls = document.getElementById("game-controls");
-    gameControls.hidden = false;
-}
-
-(async () => {
-    const provider = new Web3.providers.WebsocketProvider(window.ethereum);
-    const web3 = new Web3(provider);
-
-    // Load ABI from a JSON string (replace with your own ABI)
-    const polyPenTokenABI = [
+const contractAddress = "0x909dE4D8856d041335EaE89d421D331026C95e7d";
+const contractABI = [
   {
     "inputs": [],
     "stateMutability": "nonpayable",
@@ -511,37 +484,64 @@ function showGameControls() {
   }
 ];
 
-    // Replace with the correct contract addresses
-    const polyPenTokenAddress = '0x7def6e73B2Be4D31fe1c918c3b55907cFc21bA8D';
-    const coinflipContractAddress = '0x909dE4D8856d041335EaE89d421D331026C95e7d';
+const polyPenTokenAddress = "0x7def6e73B2Be4D31fe1c918c3b55907cFc21bA8D";
 
-    // Initialize contract instances
-    const polyPenToken = new web3.eth.Contract(polyPenTokenABI, polyPenTokenAddress);
-    const coinflipContract = new web3.eth.Contract(coinflipContractABI, coinflipContractAddress);
+window.addEventListener("load", async () => {
+  if (window.ethereum) {
+    window.web3 = new Web3(ethereum);
+    try {
+      await ethereum.enable();
+      initApp();
+    } catch (error) {
+      console.error("User denied account access.");
+    }
+  } else if (window.web3) {
+    window.web3 = new Web3(web3.currentProvider);
+    initApp();
+  } else {
+    console.error("No web3? You should consider trying MetaMask!");
+  }
+});
 
-    // Example game logic
-    const playCoinflip = async () => {
-        try {
-            const playerAddress = await connect();
-            if (!playerAddress) return;
+function initApp() {
+  const contractInstance = new web3.eth.Contract(contractABI, contractAddress);
+  const tokenInstance = new web3.eth.Contract(contractABI, polyPenTokenAddress);
 
-            const betAmount = web3.utils.toWei('1', 'ether');
+  document.getElementById("connect-wallet").addEventListener("click", async () => {
+    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+    const account = accounts[0];
+    document.getElementById("game-controls").removeAttribute("hidden");
+  });
 
-            // Approve the coinflip contract to spend tokens on the player's behalf
-            await polyPenToken.methods.approve(coinflipContractAddress, betAmount).send({ from: playerAddress });
+  document.getElementById("approve-tokens").addEventListener("click", async () => {
+    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+    const account = accounts[0];
+    const amountToApprove = web3.utils.toWei("1", "ether");
 
-            // Place bet and play coinflip
-            const result = await coinflipContract.methods.placeBet(true).send({ from: playerAddress });
-            console.log('Coinflip result:', result);
-        } catch (error) {
-            console.error('Error playing coinflip:', error);
-        }
-    };
+    tokenInstance.methods
+      .approve(contractAddress, amountToApprove)
+      .send({ from: account })
+      .on("transactionHash", (hash) => {
+        console.log("Approval transaction submitted.");
+      })
+      .on("receipt", (receipt) => {
+        console.log("Approval transaction confirmed.");
+      });
+  });
 
-    // Connect buttons to functions
-    const connectButton = document.getElementById('connect-wallet');
-    connectButton.addEventListener('click', connect);
+  document.getElementById("play-coinflip").addEventListener("click", async () => {
+    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+    const account = accounts[0];
+    const betAmount = web3.utils.toWei("0.1", "ether");
 
-    const playButton = document.getElementById('play-coinflip');
-    playButton.addEventListener('click', playCoinflip);
-})();
+    contractInstance.methods
+      .coinflip(betAmount)
+      .send({ from: account, value: web3.utils.toWei("0.1", "ether") })
+      .on("transactionHash", (hash) => {
+        console.log("Coinflip transaction submitted.");
+      })
+      .on("receipt", (receipt) => {
+        console.log("Coinflip transaction confirmed.");
+      });
+  });
+}
