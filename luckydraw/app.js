@@ -210,20 +210,29 @@ $(document).ready(function() {
         }
 
         // Place bet
-        contract.methods.placeBet(number, web3.utils.toWei(amount, 'ether')).send({from: player})
-        .on('transactionHash', function(hash){
-            console.log(hash);
-            $('#status').text('Transaction sent, waiting for confirmation...');
-        })
-        .on('confirmation', function(confirmationNumber, receipt){
-            console.log(receipt);
-            $('#status').text('Bet placed successfully!');
-        })
-        .on('error', function(error) {
-            console.error(error);
-            $('#status').text('Error placing bet');
-        });
+        function placeBet(number, amount) {
+    const gasLimit = 500000; // set custom gas limit
+    const gasPrice = web3.utils.toWei('5', 'gwei'); // set custom gas price to 5 gwei
+
+    contract.methods.placeBet(number, amount).send({
+        from: web3.eth.defaultAccount,
+        gas: gasLimit,
+        gasPrice: gasPrice
+    })
+    .on('transactionHash', function(hash) {
+        console.log('Transaction hash:', hash);
+        $('#status').text('Transaction sent, waiting for confirmation...');
+    })
+    .on('confirmation', function(confirmationNumber, receipt) {
+        console.log('Confirmation:', receipt);
+        $('#status').text('Bet placed successfully!');
+    })
+    .on('error', function(error) {
+        console.error('Error:', error);
+        $('#status').text('Error placing bet');
     });
+}
+
 
     // Listen for winning number generation
     $('#generate-button').click(function() {
