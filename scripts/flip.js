@@ -530,18 +530,24 @@ function initApp() {
   });
 
   document.getElementById("play-coinflip").addEventListener("click", async () => {
-    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-    const account = accounts[0];
-    const betAmount = web3.utils.toWei("0.1", "ether");
+      try {
+        const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+        const account = accounts[0];
+        const betAmount = document.getElementById("bet-amount").value;
 
-    contractInstance.methods
-      .coinflip(betAmount)
-      .send({ from: account, value: web3.utils.toWei("0.1", "ether") })
-      .on("transactionHash", (hash) => {
-        console.log("Coinflip transaction submitted.");
-      })
-      .on("receipt", (receipt) => {
-        console.log("Coinflip transaction confirmed.");
-      });
+        if (!betAmount || isNaN(betAmount) || Number(betAmount) <= 0) {
+          alert("Please enter a valid bet amount.");
+          return;
+        }
+
+        const weiBetAmount = web3.utils.toWei(betAmount, "ether");
+        await contractInstance.methods.coinflip(weiBetAmount).send({ from: account, value: web3.utils.toWei("0.1", "ether") });
+
+        console.log("Coin flip game played");
+      } catch (error) {
+        console.error("Error playing coin flip game:", error.message);
+      }
+    });
+
   });
 }

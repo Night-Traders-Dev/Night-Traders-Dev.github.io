@@ -10,9 +10,11 @@
     <h1>Coin Flip Game</h1>
     <button id="connect-wallet">Connect Wallet</button>
     <div id="game-controls" hidden>
-        <button id="approve-tokens">Approve Tokens</button>
-        <button id="play-coinflip">Play Coin Flip</button>
+      <input type="number" id="bet-amount" placeholder="Enter bet amount" min="0" step="1">
+      <button id="approve-tokens">Approve Tokens</button>
+      <button id="play-coinflip">Play Coin Flip</button>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/web3@1.5.3/dist/web3.min.js"></script>
     <script src="scripts/flip.js"></script>
 </body>
