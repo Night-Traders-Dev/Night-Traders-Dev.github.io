@@ -6,8 +6,8 @@
   }
 
   const web3 = new Web3(provider);
-  const polyPenGiveawayAddress = '0x1293C09091f90712C17155F5008F6acE3017EAFD'; // Replace with the actual contract address
-  const polyPenGiveawayABI = [
+  const giveawayAddress = '0x1293C09091f90712C17155F5008F6acE3017EAFD'; // Replace with the actual Giveaway contract address
+  const giveawayABI = [
   {
     "inputs": [
       {
@@ -198,15 +198,15 @@
     "stateMutability": "nonpayable",
     "type": "function"
   }
-]; // Replace with the actual ABI of the PolyPen Giveaway contract
-  const polyPenGiveaway = new web3.eth.Contract(polyPenGiveawayABI, polyPenGiveawayAddress);
+]; // Replace with the actual ABI of the Giveaway contract
+  const giveawayContract = new web3.eth.Contract(giveawayABI, giveawayAddress);
 
   const $connect = document.getElementById('connect');
   const $giveaway = document.getElementById('giveaway');
-  const $claimForm = document.getElementById('claim-form');
-  const $giveawayAddress = document.getElementById('giveawayAddress');
+  const $giveawayForm = document.getElementById('giveaway-form');
+  const $receiverAddress = document.getElementById('receiverAddress');
   const $giveawayAmount = document.getElementById('giveawayAmount');
-  const $claimStatus = document.getElementById('claim-status');
+  const $giveawayStatus = document.getElementById('giveaway-status');
 
   $connect.addEventListener('click', async () => {
     try {
@@ -219,10 +219,10 @@
     }
   });
 
-  $claimForm.addEventListener('submit', async (event) => {
+  $giveawayForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    const giveawayAddress = $giveawayAddress.value;
+    const receiverAddress = $receiverAddress.value;
     const amount = parseFloat($giveawayAmount.value);
     if (isNaN(amount) || amount <= 0) {
       alert('Please enter a valid amount');
@@ -233,14 +233,14 @@
     const amountInUnits = BigInt(amount * 10 ** decimals);
 
     try {
-      $claimStatus.textContent = 'Processing...';
+      $giveawayStatus.textContent = 'Processing...';
       const accounts = await ethereum.request({ method: 'eth_accounts' });
       const account = accounts[0];
-      await polyPenGiveaway.methods.claimGiveaway(giveawayAddress, amountInUnits.toString()).send({ from: account });
-      $claimStatus.textContent = `Successfully claimed ${amount} PolyPen from ${giveawayAddress}`;
+      await giveawayContract.methods.sendGiveaway(receiverAddress, amountInUnits.toString()).send({ from: account });
+      $giveawayStatus.textContent = `Successfully sent ${amount} PolyPen to ${receiverAddress}`;
     } catch (error) {
-      console.error('Error claiming giveaway:', error);
-      $claimStatus.textContent = 'Error: Transaction failed';
+      console.error('Error sending giveaway:', error);
+      $giveawayStatus.textContent = 'Error: Transaction failed';
     }
   });
 })();
