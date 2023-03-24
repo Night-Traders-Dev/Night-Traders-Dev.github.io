@@ -1,0 +1,269 @@
+$(document).ready(function() {
+    // Connect to contract
+    const contractAddress = "0x3e9798fC9CC07681C0dB6Befd2756d23D6964799";
+    const contractABI = [
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_polyPenTokenAddress",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "player",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "number",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "BetPlaced",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "player",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "number",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "Winner",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "bets",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "number",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "player",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "contractBalance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "generateWinningNumber",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address payable",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_number",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "placeBet",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "polyPenToken",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "winningNumber",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawFees",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+];
+    const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+    // Check if user has MetaMask installed
+    if (typeof window.ethereum !== 'undefined') {
+        console.log('MetaMask is installed');
+    } else {
+        console.log('MetaMask is not installed');
+    }
+
+    // Listen for form submission
+    $('#bet-form').submit(function(event) {
+        event.preventDefault();
+        const number = $('#number-input').val();
+        const amount = $('#amount-input').val();
+        const player = web3.eth.defaultAccount;
+
+        // Check if user is logged in to MetaMask
+        if (typeof player === 'undefined') {
+            $('#status').text('Please connect to MetaMask and refresh the page');
+            return;
+        }
+
+        // Place bet
+        contract.methods.placeBet(number, web3.utils.toWei(amount, 'ether')).send({from: player})
+        .on('transactionHash', function(hash){
+            console.log(hash);
+            $('#status').text('Transaction sent, waiting for confirmation...');
+        })
+        .on('confirmation', function(confirmationNumber, receipt){
+            console.log(receipt);
+            $('#status').text('Bet placed successfully!');
+        })
+        .on('error', function(error) {
+            console.error(error);
+            $('#status').text('Error placing bet');
+        });
+    });
+
+    // Listen for winning number generation
+    $('#generate-button').click(function() {
+        const player = web3.eth.defaultAccount;
+
+        // Check if user is logged in to MetaMask
+        if (typeof player === 'undefined') {
+            $('#status').text('Please connect to MetaMask and refresh the page');
+            return;
+        }
+
+        // Generate winning number
+        contract.methods.generateWinningNumber().send({from: player})
+        .on('transactionHash', function(hash){
+            console.log(hash);
+            $('#status').text('Transaction sent, waiting for confirmation...');
+        })
+        .on('confirmation', function(confirmationNumber, receipt){
+            console.log(receipt);
+            $('#status').text('Winning number generated and prize distributed!');
+        })
+        .on('error', function(error) {
+            console.error(error);
+            $('#status').text('Error generating winning number');
+        });
+    });
+
+    // Listen for fee withdrawal
+    $('#withdraw-button').click(function() {
+        const player = web3.eth.defaultAccount;
+
+        // Check if user is logged in to MetaMask
+        if (typeof player === 'undefined') {
+            $('#status').text('Please connect to MetaMask and refresh the page');
+            return;
+        }
+
+        // Withdraw fees
+        contract.methods.withdrawFees().send({from: player})
+        .on('transactionHash', function(hash){
+            console.log(hash);
+            $('#status').text('Transaction sent, waiting for confirmation...');
+        })
+        .on('confirmation', function(confirmationNumber, receipt){
+            console.log(receipt);
+            $('#status').text('Fees withdrawn successfully!');
+        })
+        .on('error', function(error) {
+            console.error(error);
+            $('#status').text('Error withdrawing fees');
+        });
+    });
+});
