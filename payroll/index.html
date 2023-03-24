@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolyPen Payroll - Employee</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>PolyPen Payroll - Employee</h1>
+        <button id="connect">Connect to MetaMask</button>
+
+        <div id="employee" class="hidden">
+            <h2>Employee Panel</h2>
+            <p id="balance"></p>
+            <form id="withdraw-form">
+                <label for="withdrawAmount">Amount (PolyPen):</label>
+                <input type="number" id="withdrawAmount" name="withdrawAmount" step="any" required>
+                <button type="submit">Withdraw</button>
+            </form>
+            <p id="withdraw-status"></p>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@metamask/detect-provider"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
