@@ -1,4 +1,21 @@
 $(document).ready(function() {
+    // Check if user has MetaMask installed
+    if (window.ethereum) {
+        console.log('MetaMask is installed');
+        window.web3 = new Web3(window.ethereum);
+        // Request account access if needed
+        window.ethereum.request({ method: 'eth_requestAccounts' })
+        .then(function(accounts) {
+            console.log('Connected to MetaMask:', accounts[0]);
+        })
+        .catch(function(error) {
+            console.error(error);
+            $('#status').text('Error connecting to MetaMask');
+        });
+    } else {
+        console.log('MetaMask is not installed');
+    }
+
     // Connect to contract
     const contractAddress = "0x3e9798fC9CC07681C0dB6Befd2756d23D6964799";
     const contractABI = [
@@ -178,13 +195,6 @@ $(document).ready(function() {
   }
 ];
     const contract = new web3.eth.Contract(contractABI, contractAddress);
-
-    // Check if user has MetaMask installed
-    if (typeof window.ethereum !== 'undefined') {
-        console.log('MetaMask is installed');
-    } else {
-        console.log('MetaMask is not installed');
-    }
 
     // Listen for form submission
     $('#bet-form').submit(function(event) {
