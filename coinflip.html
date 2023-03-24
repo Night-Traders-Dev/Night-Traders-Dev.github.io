@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coin Flip</title>
-    <link rel="stylesheet" href="CSS/coinflip.css">
+    <title>Coin Flip Game</title>
 </head>
 <body>
     <h1>Coin Flip Game</h1>
-    <button id="connect-wallet">Connect Wallet</button>
-    <div id="game-controls" hidden>
-      <input type="number" id="bet-amount" placeholder="Enter bet amount" min="0" step="1">
-      <button id="approve-tokens">Approve Tokens</button>
-      <button id="play-coinflip">Play Coin Flip</button>
-    </div>
+    <p>Enter the amount of tokens you want to approve and play:</p>
+    <input type="number" id="amount" placeholder="Amount">
+    <button id="approve">Approve Tokens</button>
+    <button id="play">Play Coin Flip</button>
 
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.3/dist/web3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1/web3.min.js"></script>
     <script src="scripts/flip.js"></script>
 </body>
 </html>
