@@ -545,7 +545,7 @@ const contractABI = [
     "type": "function"
   }
 ]; // Replace with the ABI of the PenthouseClimateModule contract
-const contractAddress = "0xbC0041a35C396E7A4637aC7896615f7795cC09bF";
+const contractAddress = "0x8c987637473f876cE2DeAb2CaA3f66D962D1B8C9";
 
 let web3;
 let contract;
