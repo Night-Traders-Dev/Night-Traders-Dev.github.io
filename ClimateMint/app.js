@@ -548,7 +548,6 @@ const contractABI = [
 const contractAddress = "0xbC0041a35C396E7A4637aC7896615f7795cC09bF";
 
 let web3;
-let web3Polygon;
 let contract;
 let userAddress;
 
@@ -561,10 +560,7 @@ async function connectMetamask() {
             const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
             userAddress = accounts[0];
 
-            // Instantiate a separate Web3 instance for the Polygon network
-            web3Polygon = new Web3("https://polygon-rpc.com");
-
-            contract = new web3Polygon.eth.Contract(contractABI, contractAddress);
+            contract = new web3.eth.Contract(contractABI, contractAddress);
 
             document.getElementById("connectBtn").classList.add("hidden");
             document.getElementById("mintSection").classList.remove("hidden");
