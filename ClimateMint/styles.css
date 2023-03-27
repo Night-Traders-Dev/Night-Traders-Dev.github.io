@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,40 +11,58 @@ body {
 .container {
     background-color: #ffffff;
     padding: 2rem;
-    border-radius: 10px;
+    border-radius: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
+    width: 90%;
+    max-width: 500px;
 }
 
 h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #4a47a3;
+}
+
+p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
 }
 
 button {
-    background-color: #4CAF50;
+    background-color: #ff5e62;
     border: none;
     color: white;
-    padding: 10px 24px;
+    padding: 12px 28px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 50px;
     transition-duration: 0.4s;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #ff8b8e;
 }
 
 input[type="number"] {
-    padding: 5px 10px;
+    padding: 8px 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-bottom: 1rem;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 120px;
+}
+
+label {
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 0.3rem;
 }
 
 .hidden {
