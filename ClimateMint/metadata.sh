@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # Set the number of NFTs and output directory
-NUM_NFTS=10000
-OUTPUT_DIR="metadata"
+NUM_NFTS=5000
+OUTPUT_DIR="CM2-metadata"
 
 # Create the output directory if it doesn't exist
 mkdir -p $OUTPUT_DIR
 
 # Set the image URL
-IMAGE_URL="https://polypenthouse.com/ClimateMint/0.png"
+IMAGE_URL="https://polypenthouse.com/ClimateMint/1.png"
 
 # Loop through the range of NFTs
 for i in $(seq 0 $(($NUM_NFTS-1))); do
@@ -21,7 +21,7 @@ for i in $(seq 0 $(($NUM_NFTS-1))); do
   "attributes": [
     {
       "trait_type": "Uses",
-      "value": "1"
+      "value": "3"
     }
   ]
 }

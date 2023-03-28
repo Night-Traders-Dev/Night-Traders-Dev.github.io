@@ -1,0 +1,11 @@
+{
+  "name": "Penthouse Climate Module #4104",
+  "description": "A unique NFT representing penthouse climate module #4104",
+  "image": "https://polypenthouse.com/ClimateMint/1.png",
+  "attributes": [
+    {
+      "trait_type": "Uses",
+      "value": "3"
+    }
+  ]
+}
