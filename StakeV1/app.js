@@ -1,8 +1,7 @@
-// Replace these with your actual contract and token addresses
-const contractAddress = '0x90d0090B38ccEdAEFfDA59C3B1e7EFf18Ec25eFb';
-const tokenAddress = '0x7def6e73b2be4d31fe1c918c3b55907cfc21ba8d';
+p/ Replace these with your actual contract and token addresses
+const STAKING_Address = '0x90d0090B38ccEdAEFfDA59C3B1e7EFf18Ec25eFb';
 
-const contractABI = [
+const STAKING_ABI = [
   {
     "inputs": [
       {
@@ -313,449 +312,119 @@ const contractABI = [
   }
 ];
 
-const tokenABI = [
-  {
-    "inputs": [],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "spender",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "value",
-        "type": "uint256"
-      }
-    ],
-    "name": "Approval",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "previousOwner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
-    ],
-    "name": "OwnershipTransferred",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "from",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "value",
-        "type": "uint256"
-      }
-    ],
-    "name": "Transfer",
-    "type": "event"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "spender",
-        "type": "address"
-      }
-    ],
-    "name": "allowance",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "spender",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "approve",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "balanceOf",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "decimals",
-    "outputs": [
-      {
-        "internalType": "uint8",
-        "name": "",
-        "type": "uint8"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "spender",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "subtractedValue",
-        "type": "uint256"
-      }
-    ],
-    "name": "decreaseAllowance",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "spender",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "addedValue",
-        "type": "uint256"
-      }
-    ],
-    "name": "increaseAllowance",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "name",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "owner",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "renounceOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "symbol",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "totalSupply",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "transfer",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "from",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "transferFrom",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
-    ],
-    "name": "transferOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  }
-];
 
+let web3;
+let contract;
+let account;
 
-// Connect to Metamask
+const stakedTokenSelect = document.getElementById('staked-token-select');
+const rewardAmount = document.getElementById('reward-amount');
+
 const connectButton = document.getElementById('connect-button');
-const accountText = document.getElementById('account');
+const hamburger = document.querySelector('.hamburger');
+const nav = document.querySelector('nav');
 
-async function connectToMetamask() {
+const toggleNav = () => {
+  hamburger.classList.toggle('open');
+  nav.classList.toggle('show');
+};
+
+const connectToMetamask = async () => {
   try {
-    const provider = await ethereum.request({ method: 'eth_requestAccounts' });
-    const signer = new ethers.providers.Web3Provider(provider).getSigner();
-    const contract = new ethers.Contract(contractAddress, contractABI, signer);
-    const token = new ethers.Contract(tokenAddress, tokenABI, signer);
-    const currentAccount = await signer.getAddress();
-
-    // Display the current account
-    accountText.textContent = `Connected Account: ${currentAccount}`;
-
-    // Load the list of staked tokens
-    const tokenSelect = document.getElementById('token-select');
-    const stakedTokenSelect = document.getElementById('staked-token-select');
-    let stakedTokens = [];
-
-    const loadTokens = async () => {
-      const balance = await contract.balanceOf(currentAccount);
-      for (let i = 0; i < balance; i++) {
-        const tokenId = await contract.tokenOfOwnerByIndex(currentAccount, i);
-        if (!stakedTokens.includes(tokenId)) {
-          stakedTokens.push(tokenId);
-          const option = document.createElement('option');
-          option.value = tokenId;
-          option.textContent = tokenId;
-          tokenSelect.appendChild(option);
-        }
-      }
-    };
-
-    await loadTokens();
-
-    const loadStakedTokens = async () => {
-      const stakedCount = await contract.stakesCount(currentAccount);
-      for (let i = 0; i < stakedCount; i++) {
-        const tokenId = await contract.stakes(currentAccount, i);
-        if (!stakedTokens.includes(tokenId)) {
-          stakedTokens.push(tokenId);
-          const option = document.createElement('option');
-          option.value = tokenId;
-          option.textContent = tokenId;
-          stakedTokenSelect.appendChild(option);
-        }
-      }
-    };
-
-    await loadStakedTokens();
-
-    // Staking
-    const stakeButton = document.getElementById('stake-button');
-
-    stakeButton.addEventListener('click', async () => {
-      const tokenId = tokenSelect.value;
-      const tx = await contract.stake(tokenId);
-      await tx.wait();
-      alert('Token staked successfully!');
-      window.location.reload();
-    });
-
-    // Unstaking
-    const unstakeButton = document.getElementById('unstake-button');
-
-    unstakeButton.addEventListener('click', async () => {
-      const tokenId = stakedTokenSelect.value;
-      const tx = await contract.unstake(tokenId);
-      await tx.wait();
-      alert('Token unstaked successfully!');
-      window.location.reload();
-    });
-
-    // Claiming reward
-    const rewardAmount = document.getElementById('reward-amount');
-    const claimRewardButton = document.getElementById('claim-reward-button');
-
-    const updateReward = async () => {
-      const reward = await contract.getPendingReward(currentAccount);
-      rewardAmount.textContent = `${reward} PolyPen`;
-    };
-
-    await updateReward();
-
-    claimRewardButton.addEventListener('click', async () => {
-      const tx = await contract.claimReward();
-      await tx.wait();
-      alert('Reward claimed successfully!');
-      window.location.reload();
-    });
+    await window.ethereum.enable();
+    web3 = new Web3(window.ethereum);
+    const accounts = await web3.eth.getAccounts();
+    account = accounts[0];
+    contract = new web3.eth.Contract(STAKING_ABI, STAKING_ADDRESS);
+    updateUI();
   } catch (error) {
     console.error(error);
   }
-}
-connectButton.addEventListener('click', () => {
-  connectToMetamask();
-});
+};
 
-// Responsive design
-const menuButton = document.getElementById('menu-button');
-const navList = document.getElementById('nav-list');
+const updateUI = async () => {
+  // Clear token select options
+  tokenSelect.innerHTML = '';
+  stakedTokenSelect.innerHTML = '';
 
-menuButton.addEventListener('click', () => {
-  navList.classList.toggle('show');
-});
+  // Get list of ERC-721 tokens owned by the user
+  const tokens = await contract.methods.tokensOfOwner(account).call();
 
-window.addEventListener('resize', () => {
-  if (window.innerWidth > 768) {
-    navList.classList.remove('show');
+  if (tokens.length === 0) {
+    // Display message if user does not have any tokens to stake
+    tokenSelect.innerHTML = '<option value="" disabled selected>You do not have any tokens to stake</option>';
+  } else {
+    // Add token select options
+    for (let i = 0; i < tokens.length; i++) {
+      const token = tokens[i];
+      const tokenName = await contract.methods.tokenName(token).call();
+      const option = document.createElement('option');
+      option.value = token;
+      option.innerHTML = tokenName;
+      tokenSelect.appendChild(option);
+    }
   }
+
+  // Get list of staked tokens owned by the user
+  const stakedTokens = await contract.methods.getStakedTokens(account).call();
+
+  if (stakedTokens.length === 0) {
+    // Display message if user does not have any staked tokens
+    stakedTokenSelect.innerHTML = '<option value="" disabled selected>You do not have any staked tokens</option>';
+  } else {
+    // Add staked token select options
+    for (let i = 0; i < stakedTokens.length; i++) {
+      const stakedToken = stakedTokens[i];
+      const stakedTokenName = await contract.methods.tokenName(stakedToken).call();
+      const option = document.createElement('option');
+      option.value = stakedToken;
+      option.innerHTML = stakedTokenName;
+      stakedTokenSelect.appendChild(option);
+    }
+  }
+
+  // Get user's reward amount
+  const reward = await contract.methods.getReward(account).call();
+  rewardAmount.innerHTML = `${reward} POLYPEN`;
+};
+
+const stakeTokens = async () => {
+  const token = tokenSelect.value;
+  const amount = 1; // Change to desired staking amount
+  const options = { from: account };
+  await contract.methods.stake(token, amount).send(options);
+  updateUI();
+};
+
+const unstakeTokens = async () => {
+  const stakedToken = stakedTokenSelect.value;
+  const options = { from: account };
+  await contract.methods.unstake(stakedToken).send(options);
+  updateUI();
+};
+
+const claimReward = async () => {const options = { from: account };
+await contract.methods.claimReward().send(options);
+updateUI();
+};
+
+connectButton.addEventListener('click', connectToMetamask);
+document.querySelector('.hamburger').addEventListener('click', toggleNav);
+document.querySelectorAll('nav a').forEach(link => link.addEventListener('click', toggleNav));
+document.getElementById('stake-button').addEventListener('click', stakeTokens);
+document.getElementById('unstake-button').addEventListener('click', unstakeTokens);
+document.getElementById('claim-reward-button').addEventListener('click', claimReward);
+
+window.addEventListener('load', async () => {
+if (window.ethereum) {
+web3 = new Web3(window.ethereum);
+const accounts = await web3.eth.getAccounts();
+if (accounts.length > 0) {
+account = accounts[0];
+contract = new web3.eth.Contract(STAKING_ABI, STAKING_ADDRESS);
+updateUI();
+}
+} else {
+console.error('Please install Metamask');
+}
 });
-
-
-

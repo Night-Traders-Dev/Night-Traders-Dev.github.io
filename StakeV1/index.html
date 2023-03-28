@@ -3,51 +3,61 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staking Contract</title>
+    <title>Stake Tokens and Earn Rewards</title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <header>
-      <button id="menu-button" class="hamburger">
-        <span class="sr-only">Toggle navigation menu</span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </button>
-      <h1>Staking Contract</h1>
-      <nav>
-        <ul id="nav-list">
-          <li><a href="#">Stake Tokens</a></li>
-          <li><a href="#">Unstake Tokens</a></li>
-          <li><a href="#">Claim Reward</a></li>
+      <div class="header-container">
+        <h1 class="logo">PolyPen</h1>
+        <button class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+      <nav class="nav-container">
+        <ul>
+          <li><a href="#stake-section">Stake Tokens</a></li>
+          <li><a href="#unstake-section">Unstake Tokens</a></li>
+          <li><a href="#claim-section">Claim Rewards</a></li>
         </ul>
       </nav>
     </header>
     <main>
-      <div id="connect">
-        <button id="connect-button">Connect to Metamask</button>
-        <p id="account"></p>
-      </div>
-      <div id="stake">
-        <h2>Stake Tokens</h2>
-        <p>Select a token to stake:</p>
-        <select id="token-select"></select>
-        <button id="stake-button">Stake</button>
-      </div>
-      <div id="unstake">
-        <h2>Unstake Tokens</h2>
-        <p>Select a token to unstake:</p>
-        <select id="staked-token-select"></select>
-        <button id="unstake-button">Unstake</button>
-      </div>
-      <div id="claim-reward">
-        <h2>Claim Reward</h2>
-        <p>Your current reward is:</p>
-        <p id="reward-amount"></p>
-        <button id="claim-reward-button">Claim Reward</button>
-      </div>
+      <section id="hero-section">
+        <div class="hero-container">
+          <h1>Stake Your Tokens and Earn Rewards!</h1>
+          <button id="connect-button">Connect to Metamask</button>
+        </div>
+      </section>
+      <section id="stake-section">
+        <div class="section-container">
+          <h2>Stake Tokens</h2>
+          <p>Select a token to stake:</p>
+          <select id="token-select"></select>
+          <button id="stake-button">Stake</button>
+        </div>
+      </section>
+      <section id="unstake-section">
+        <div class="section-container">
+          <h2>Unstake Tokens</h2>
+          <p>Select a token to unstake:</p>
+          <select id="staked-token-select"></select>
+          <button id="unstake-button">Unstake</button>
+        </div>
+      </section>
+      <section id="claim-section">
+        <div class="section-container">
+          <h2>Claim Rewards</h2>
+          <p>Your current reward is:</p>
+          <p id="reward-amount"></p>
+          <button id="claim-reward-button">Claim Reward</button>
+        </div>
+      </section>
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1/web3.min.js"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" integrity="sha384-7w3Y8xzBg+D7A9sXyfL/L+M/xm/+CgSYyaZdovHmV7cW8+UqwV6ffzQ6BnDOJSHf" crossorigin="anonymous"></script>
     <script src="app.js"></script>
   </body>
 </html>
