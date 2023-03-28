@@ -643,91 +643,119 @@ const tokenABI = [
   }
 ];
 
+
 // Connect to Metamask
 const connectButton = document.getElementById('connect-button');
 const accountText = document.getElementById('account');
-const provider = await ethereum.request({ method: 'eth_requestAccounts' });
-const signer = new ethers.providers.Web3Provider(provider).getSigner();
-const contract = new ethers.Contract(contractAddress, contractABI, signer);
-const token = new ethers.Contract(tokenAddress, tokenABI, signer);
-const currentAccount = await signer.getAddress();
 
-// Display the current account
-accountText.textContent = `Connected Account: ${currentAccount}`;
+async function connectToMetamask() {
+  try {
+    const provider = await ethereum.request({ method: 'eth_requestAccounts' });
+    const signer = new ethers.providers.Web3Provider(provider).getSigner();
+    const contract = new ethers.Contract(contractAddress, contractABI, signer);
+    const token = new ethers.Contract(tokenAddress, tokenABI, signer);
+    const currentAccount = await signer.getAddress();
 
-// Load the list of staked tokens
-const tokenSelect = document.getElementById('token-select');
-const stakedTokenSelect = document.getElementById('staked-token-select');
-let stakedTokens = [];
+    // Display the current account
+    accountText.textContent = `Connected Account: ${currentAccount}`;
 
-async function loadTokens() {
-  const balance = await contract.balanceOf(currentAccount);
-  for (let i = 0; i < balance; i++) {
-    const tokenId = await contract.tokenOfOwnerByIndex(currentAccount, i);
-    if (!stakedTokens.includes(tokenId)) {
-      stakedTokens.push(tokenId);
-      const option = document.createElement('option');
-      option.value = tokenId;
-      option.textContent = tokenId;
-      tokenSelect.appendChild(option);
-    }
+    // Load the list of staked tokens
+    const tokenSelect = document.getElementById('token-select');
+    const stakedTokenSelect = document.getElementById('staked-token-select');
+    let stakedTokens = [];
+
+    const loadTokens = async () => {
+      const balance = await contract.balanceOf(currentAccount);
+      for (let i = 0; i < balance; i++) {
+        const tokenId = await contract.tokenOfOwnerByIndex(currentAccount, i);
+        if (!stakedTokens.includes(tokenId)) {
+          stakedTokens.push(tokenId);
+          const option = document.createElement('option');
+          option.value = tokenId;
+          option.textContent = tokenId;
+          tokenSelect.appendChild(option);
+        }
+      }
+    };
+
+    await loadTokens();
+
+    const loadStakedTokens = async () => {
+      const stakedCount = await contract.stakesCount(currentAccount);
+      for (let i = 0; i < stakedCount; i++) {
+        const tokenId = await contract.stakes(currentAccount, i);
+        if (!stakedTokens.includes(tokenId)) {
+          stakedTokens.push(tokenId);
+          const option = document.createElement('option');
+          option.value = tokenId;
+          option.textContent = tokenId;
+          stakedTokenSelect.appendChild(option);
+        }
+      }
+    };
+
+    await loadStakedTokens();
+
+    // Staking
+    const stakeButton = document.getElementById('stake-button');
+
+    stakeButton.addEventListener('click', async () => {
+      const tokenId = tokenSelect.value;
+      const tx = await contract.stake(tokenId);
+      await tx.wait();
+      alert('Token staked successfully!');
+      window.location.reload();
+    });
+
+    // Unstaking
+    const unstakeButton = document.getElementById('unstake-button');
+
+    unstakeButton.addEventListener('click', async () => {
+      const tokenId = stakedTokenSelect.value;
+      const tx = await contract.unstake(tokenId);
+      await tx.wait();
+      alert('Token unstaked successfully!');
+      window.location.reload();
+    });
+
+    // Claiming reward
+    const rewardAmount = document.getElementById('reward-amount');
+    const claimRewardButton = document.getElementById('claim-reward-button');
+
+    const updateReward = async () => {
+      const reward = await contract.getPendingReward(currentAccount);
+      rewardAmount.textContent = `${reward} PolyPen`;
+    };
+
+    await updateReward();
+
+    claimRewardButton.addEventListener('click', async () => {
+      const tx = await contract.claimReward();
+      await tx.wait();
+      alert('Reward claimed successfully!');
+      window.location.reload();
+    });
+  } catch (error) {
+    console.error(error);
   }
 }
+connectButton.addEventListener('click', () => {
+  connectToMetamask();
+});
 
-loadTokens();
+// Responsive design
+const menuButton = document.getElementById('menu-button');
+const navList = document.getElementById('nav-list');
 
-async function loadStakedTokens() {
-  const stakedCount = await contract.stakesCount(currentAccount);
-  for (let i = 0; i < stakedCount; i++) {
-    const tokenId = await contract.stakes(currentAccount, i);
-    if (!stakedTokens.includes(tokenId)) {
-      stakedTokens.push(tokenId);
-      const option = document.createElement('option');
-      option.value = tokenId;
-      option.textContent = tokenId;
-      stakedTokenSelect.appendChild(option);
-    }
+menuButton.addEventListener('click', () => {
+  navList.classList.toggle('show');
+});
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768) {
+    navList.classList.remove('show');
   }
-}
-
-loadStakedTokens();
-
-// Staking
-const stakeButton = document.getElementById('stake-button');
-
-stakeButton.addEventListener('click', async () => {
-  const tokenId = tokenSelect.value;
-  const tx = await contract.stake(tokenId);
-  await tx.wait();
-  alert('Token staked successfully!');
-  window.location.reload();
 });
 
-// Unstaking
-const unstakeButton = document.getElementById('unstake-button');
 
-unstakeButton.addEventListener('click', async () => {
-  const tokenId = stakedTokenSelect.value;
-  const tx = await contract.unstake(tokenId);
-  await tx.wait();
-  alert('Token unstaked successfully!');
-  window.location.reload();
-});
 
-// Claiming reward
-const rewardAmount = document.getElementById('reward-amount');
-const claimRewardButton = document.getElementById('claim-reward-button');
-
-async function updateReward() {
-  const reward = await contract.getPendingReward(currentAccount);
-  rewardAmount.textContent = `${reward} PolyPen`;
-}
-
-updateReward();
-
-claimRewardButton.addEventListener('click', async () => {
-  const tx = await contract.claimReward();
-  await tx.wait();
-  alert('Reward claimed successfully!');
-  window.location.reload();
-});
