@@ -8,7 +8,7 @@ OUTPUT_DIR="metadata"
 mkdir -p $OUTPUT_DIR
 
 # Set the image URL
-IMAGE_URL="https://ipfs.infura.io/ipfs/QmXb3gre1zPtdABP1JrMtPkXTiN3Bt1yGKY7ki7Bu2BEXe/0.jpg"
+IMAGE_URL="https://polypenthouse.com/ClimateMint/0.jpg"
 
 # Loop through the range of NFTs
 for i in $(seq 0 $(($NUM_NFTS-1))); do
