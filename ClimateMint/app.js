@@ -579,7 +579,7 @@ async function mintNFTs() {
     const price = await contract.methods.PRICE().call();
     const totalCost = price * numTokens;
 
-    contract.methods.mint(numTokens).send({ from: userAddress, value: totalCost, gas: 550000})
+    contract.methods.mint(numTokens).send({ from: userAddress, value: totalCost, gas: 750000})
         .on("transactionHash", (hash) => {
             console.log("Transaction Hash:", hash);
         })
