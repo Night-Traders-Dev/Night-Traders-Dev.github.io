@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staking Contract</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+      <h1>Staking Contract</h1>
+    </header>
+    <main>
+      <div id="connect">
+        <button id="connect-button">Connect to Metamask</button>
+        <p id="account"></p>
+      </div>
+      <div id="stake">
+        <h2>Stake Tokens</h2>
+        <p>Select a token to stake:</p>
+        <select id="token-select"></select>
+        <button id="stake-button">Stake</button>
+      </div>
+      <div id="unstake">
+        <h2>Unstake Tokens</h2>
+        <p>Select a token to unstake:</p>
+        <select id="staked-token-select"></select>
+        <button id="unstake-button">Unstake</button>
+      </div>
+      <div id="claim-reward">
+        <h2>Claim Reward</h2>
+        <p>Your current reward is:</p>
+        <p id="reward-amount"></p>
+        <button id="claim-reward-button">Claim Reward</button>
+      </div>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
