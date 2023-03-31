@@ -1,3 +1,12 @@
+// main.js
+
+import { connectWallet } from '../scripts/connectWallet';
+
+// Call the connectWallet() function at the appropriate point in your application flow
+connectWallet();
+
+
+
 const contractABI = [
   {
     "inputs": [
