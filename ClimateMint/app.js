@@ -1,6 +1,6 @@
 // main.js
 
-import { connectWallet } from '../scripts/connectWallet';
+import { connectWallet } from '../scripts/connectWallet.js';
 
 // Call the connectWallet() function at the appropriate point in your application flow
 connectWallet();
