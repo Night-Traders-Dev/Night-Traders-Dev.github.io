@@ -1,30 +1,43 @@
 #!/bin/bash
 
 # Set the number of NFTs and output directory
-NUM_NFTS=5000
-OUTPUT_DIR="CM2-metadata"
+NUM_NFTS=333
+OUTPUT_DIR="PolyMetaData"
 
 # Create the output directory if it doesn't exist
 mkdir -p $OUTPUT_DIR
 
 # Set the image URL
-IMAGE_URL="https://polypenthouse.com/ClimateMint/1.png"
+IMAGE_URL="https://polypenthouse.com/PolyMetaData/?.png"
 
 # Loop through the range of NFTs
 for i in $(seq 0 $(($NUM_NFTS-1))); do
   # Create the metadata JSON content
   METADATA=$(cat <<-END
 {
-  "name": "Penthouse Climate Module #$i",
-  "description": "A unique NFT representing penthouse climate module #$i",
+  "name": "Penthouse",
+  "description": "Poly Penthouse Collection",
   "image": "$IMAGE_URL",
   "attributes": [
     {
-      "trait_type": "Uses",
-      "value": "3"
+      "trait_type": "Climate",
+      "value": "????"
+    },
+    {
+      "trait_type": "Locale",
+      "value": "????"
+    },
+    {
+      "trait_type": "Resource",
+      "value": "????"
+    },
+    {
+      "trait_type": "Resource",
+      "value": "????"
     }
   ]
 }
+
 END
 )
 
