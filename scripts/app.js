@@ -215,7 +215,7 @@ window.addEventListener("load", async () => {
 ];
 
       // Set ICO contract address
-      const icoAddress = "0x0ebEAa24aE030433627E84919da3450763904Fe4";
+      const icoAddress = "0xc60Df3aFBc1A37F09b5Ba068533FEdFb254634A2";
 
       // Create ICO contract instance
       const icoContract = new web3.eth.Contract(icoAbi, icoAddress);
