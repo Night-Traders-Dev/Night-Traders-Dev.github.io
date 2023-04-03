@@ -8,7 +8,7 @@ OUTPUT_DIR="PolyMetaData"
 mkdir -p $OUTPUT_DIR
 
 # Set the image URL
-IMAGE_URL="https://polypenthouse.com/PolyMetaData/?.png"
+IMAGE_URL="https://polypenthouse.com/PolyMetaData/images/{$i}.png"
 
 # Loop through the range of NFTs
 for i in $(seq 0 $(($NUM_NFTS-1))); do
@@ -33,7 +33,7 @@ for i in $(seq 0 $(($NUM_NFTS-1))); do
     },
     {
       "trait_type": "Resource",
-      "value": "????"
+      "value": "?????"
     }
   ]
 }
