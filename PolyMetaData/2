@@ -1,7 +1,7 @@
 {
   "name": "Penthouse",
   "description": "Poly Penthouse Collection",
-  "image": "https://polypenthouse.com/PolyMetaData/images/{}.png",
+  "image": "https://polypenthouse.com/PolyMetaData/images/2.png",
   "attributes": [
     {
       "trait_type": "Climate",
