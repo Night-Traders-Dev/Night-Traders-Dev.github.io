@@ -281,4 +281,5 @@ async function getNetworkAndContractAddress() {
     console.error("Non-Ethereum browser detected. Please install MetaMask.");
   }
 }
+}
 });
