@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f2f5;
+    background-color: #282c34;
     margin: 0;
     padding: 0;
 }
@@ -9,20 +9,26 @@ body {
     max-width: 500px;
     margin: 50px auto;
     text-align: center;
-    background-color: #ffffff;
+    background-color: #32363e;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 h1 {
-    color: #5c42f5;
+    color: #58b6ff;
+    font-size: 2em;
+    margin-bottom: 10px;
 }
 
 .swap-box {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #282c34;
+    border: 1px solid #41464d;
+    border-radius: 5px;
+    padding: 20px;
 }
 
 .token-input {
@@ -35,17 +41,39 @@ h1 {
 
 .token-input label {
     margin-right: 10px;
+    color: #ffffff;
+}
+
+.token-input select {
+    flex: 1;
+    padding: 5px 10px;
+    color: #ffffff;
+    background-color: #32363e;
+    border: 1px solid #41464d;
+    border-radius: 5px;
+}
+
+.token-input select:focus {
+    outline: none;
+    border-color: #58b6ff;
 }
 
 .token-input input {
     flex: 1;
     padding: 5px 10px;
-    border: 1px solid #ccc;
+    color: #ffffff;
+    background-color: #32363e;
+    border: 1px solid #41464d;
     border-radius: 5px;
 }
 
+.token-input input:focus {
+    outline: none;
+    border-color: #58b6ff;
+}
+
 button {
-    background-color: #5c42f5;
+    background-color: #58b6ff;
     color: #ffffff;
     padding: 10px 20px;
     border: none;
@@ -55,5 +83,5 @@ button {
 }
 
 button:hover {
-    background-color: #4837d6;
+    background-color: #4fa1e5;
 }
