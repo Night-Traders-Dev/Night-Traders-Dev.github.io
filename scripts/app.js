@@ -248,11 +248,18 @@ async function getNetworkAndContractAddress() {
 }
 
 
+(async () => {
+    const contractAddress = await getNetworkAndContractAddress();
+    if (contractAddress) {
+        // Set the contract address on the fly and use it
+        console.log('Contract address:', contractAddress);
+
+
       // Set ICO contract address
       const icoAddress = getNetworkAndContractAddress();
 
       // Create ICO contract instance
-      const icoContract = new web3.eth.Contract(icoAbi, icoAddress);
+      const icoContract = new web3.eth.Contract(icoAbi, contractAddress);
 
       // Handle buy tokens button click
       document.getElementById("buyTokensButton").addEventListener("click", async () => {
@@ -273,4 +280,5 @@ async function getNetworkAndContractAddress() {
   } else {
     console.error("Non-Ethereum browser detected. Please install MetaMask.");
   }
+}
 });
