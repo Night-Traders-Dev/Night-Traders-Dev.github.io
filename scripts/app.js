@@ -247,9 +247,10 @@ async function getNetworkAndContractAddress() {
 }
 
 
+getNetworkAndContractAddress();
 
       // Set ICO contract address
-      const icoAddress = getNetworkAndContractAddress();
+      const icoAddress = currentContractAddress;
 
       // Create ICO contract instance
       const icoContract = new web3.eth.Contract(icoAbi, icoAddress);
