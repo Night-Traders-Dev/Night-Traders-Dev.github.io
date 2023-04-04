@@ -214,7 +214,7 @@ window.addEventListener("load", async () => {
   }
 ];
 
-const bscContractAddress = '0x1234...'; // BSC contract address
+const bscContractAddress = "0xfD5e270B4773246e76CC9d468A86B32E00d50b31"; // BSC contract address
 const polygonContractAddress = "0xc60Df3aFBc1A37F09b5Ba068533FEdFb254634A2"; // Polygon contract address
 let currentContractAddress = '';
 
