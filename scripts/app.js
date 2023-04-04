@@ -247,17 +247,8 @@ async function getNetworkAndContractAddress() {
     }
 }
 
-
-(async () => {
-    const contractAddress = await getNetworkAndContractAddress();
-    if (contractAddress) {
-        // Set the contract address on the fly and use it
-        console.log('Contract address:', contractAddress);
-
-
-      // Set ICO contract address
-      const icoAddress = getNetworkAndContractAddress();
-
+      const contractAddress = await getNetworkAndContractAddress();
+      console.log(contractAddress)
       // Create ICO contract instance
       const icoContract = new web3.eth.Contract(icoAbi, contractAddress);
 
@@ -280,6 +271,4 @@ async function getNetworkAndContractAddress() {
   } else {
     console.error("Non-Ethereum browser detected. Please install MetaMask.");
   }
-}
-}
 });
