@@ -214,8 +214,42 @@ window.addEventListener("load", async () => {
   }
 ];
 
+const bscContractAddress = '0x1234...'; // BSC contract address
+const polygonContractAddress = "0xc60Df3aFBc1A37F09b5Ba068533FEdFb254634A2"; // Polygon contract address
+let currentContractAddress = '';
+
+async function getNetworkAndContractAddress() {
+    if (typeof window.ethereum === 'undefined') {
+        alert('Please install MetaMask');
+        return;
+    }
+
+    try {
+        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+        const networkId = await ethereum.request({ method: 'net_version' });
+
+        switch (parseInt(networkId)) {
+            case 56: // BSC
+                currentContractAddress = bscContractAddress;
+                console.log('Connected to BSC. Contract address:', currentContractAddress);
+                break;
+            case 137: // Polygon
+                currentContractAddress = polygonContractAddress;
+                console.log('Connected to Polygon. Contract address:', currentContractAddress);
+                break;
+            default:
+                alert('Please switch to either BSC or Polygon network');
+        }
+    } catch (error) {
+        console.error(error);
+        alert('Error connecting to MetaMask');
+    }
+}
+
+
+
       // Set ICO contract address
-      const icoAddress = "0xc60Df3aFBc1A37F09b5Ba068533FEdFb254634A2";
+      const icoAddress = getNetworkAndContractAddress();
 
       // Create ICO contract instance
       const icoContract = new web3.eth.Contract(icoAbi, icoAddress);
