@@ -232,16 +232,15 @@ async function getNetworkAndContractAddress() {
             case 56: // BSC
                 currentContractAddress = bscContractAddress;
                 console.log('Connected to BSC. Contract address:', currentContractAddress);
-                return currentContractAddress;
                 break;
             case 137: // Polygon
                 currentContractAddress = polygonContractAddress;
                 console.log('Connected to Polygon. Contract address:', currentContractAddress);
-                return currentContractAddress;
                 break;
             default:
                 alert('Please switch to either BSC or Polygon network');
         }
+        return currentContractAddress;
     } catch (error) {
         console.error(error);
         alert('Error connecting to MetaMask');
